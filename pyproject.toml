@@ -1,0 +1,16 @@
+# pyproject.toml
+[project]
+name = "ai-text-analyzer"
+version = "0.1.0"
+description = "A simple AI-powered text analyzer application"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.30.0",
+    "supabase>=2.3.0",
+    "openai>=1.0.0",
+    "numpy>=1.20.0",
+    "streamlit-javascript>=0.1.4",  # 이 부분을 추가해 줍니다.
+]
+
+[tool.hatch.build.targets.wheel]
+bypass-selection = true
