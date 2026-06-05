@@ -83,65 +83,65 @@ def log_app_usage(app_name="unknown_app", action="page_view", details=None):
         if not real_ip:
             return False
 
-            client = get_supabase_client()
-            if not client:
-                return False
+        client = get_supabase_client()
+        if not client:
+            return False
 
-            loc_data = {}
-            if real_ip not in ["Unknown"]:
-                try:
-                    res = requests.get(f"http://ip-api.com/json/{real_ip}?fields=status,country,regionName,city,lat,lon", timeout=1)
-                    loc_data = res.json() if res.status_code == 200 else {}
-                except: pass
-
-            current_session = get_or_create_session_id()
-
-            user_agent = st.context.headers.get("User-Agent", "Unknown") if hasattr(st, "context") else "Unknown"
-            
-            # 💡 [핵심 수정] 타임존 이중 계산 방지를 위해 명시적인 UTC 시간(ISO 포맷) 사용
-            utc_time = datetime.now(timezone.utc).isoformat()
-
-            log_data = {
-                "session_id": current_session,
-                "app_name": app_name,
-                "action": action,
-                "timestamp": utc_time,  # 💡 UTC 시간 전송 (Supabase가 KST로 변환)
-                "country": loc_data.get('country', "Unknown"),
-                "region": loc_data.get('regionName', "Unknown"),
-                "city": loc_data.get('city', "Unknown"),
-                "lat": loc_data.get('lat', 0.0),
-                "lon": loc_data.get('lon', 0.0),
-                "ip_address": real_ip,
-                "details": details if details else {},
-                "user_agent": user_agent
-            }
-
-            # ==========================================================
-            # 🚨 [스마트 봇 차단] 정상적인 유저는 통과시키고 헬스체크 핑만 차단
-            # ==========================================================
-            
-            # 1. 이름에 대놓고 'bot', 'uptime', 'cron' 등이 들어간 기계는 즉시 차단
-            if user_agent and any(keyword in user_agent.lower() for keyword in ["bot", "uptime", "cron"]):
-                return False
-                
-            # 2. 기기 정보(User-Agent)와 IP 주소가 "둘 다" Unknown일 때만 헬스체크 핑으로 간주하고 차단
-            # (스트림릿 버전 차이로 하나만 Unknown이 뜨는 정상 유저는 통과시켜 줍니다)
-            if user_agent == "Unknown" and real_ip == "Unknown":
-                return False
-            
-            # ==========================================================
-            
+        loc_data = {}
+        if real_ip not in ["Unknown"]:
             try:
-                print(f"DEBUG: 데이터 발송 준비 완료 - {log_data}", flush=True) # 추가
+                res = requests.get(f"http://ip-api.com/json/{real_ip}?fields=status,country,regionName,city,lat,lon", timeout=1)
+                loc_data = res.json() if res.status_code == 200 else {}
+            except: pass
 
-                response = client.table('usage_logs').insert(log_data, returning='minimal').execute()
+        current_session = get_or_create_session_id()
 
-                print(f"✅ 트래커 기록 성공: {response.data}", flush=True) # 상세 결과 출력
-            except Exception as e:
-                # 이 줄이 없거나 pass로 되어 있다면 아래처럼 에러 내용을 찍도록 수정합니다.
-                print(f"🚨 트래커 에러 발생: {e}", flush=True)
+        user_agent = st.context.headers.get("User-Agent", "Unknown") if hasattr(st, "context") else "Unknown"
+        
+        # 💡 [핵심 수정] 타임존 이중 계산 방지를 위해 명시적인 UTC 시간(ISO 포맷) 사용
+        utc_time = datetime.now(timezone.utc).isoformat()
 
-            return True
+        log_data = {
+            "session_id": current_session,
+            "app_name": app_name,
+            "action": action,
+            "timestamp": utc_time,  # 💡 UTC 시간 전송 (Supabase가 KST로 변환)
+            "country": loc_data.get('country', "Unknown"),
+            "region": loc_data.get('regionName', "Unknown"),
+            "city": loc_data.get('city', "Unknown"),
+            "lat": loc_data.get('lat', 0.0),
+            "lon": loc_data.get('lon', 0.0),
+            "ip_address": real_ip,
+            "details": details if details else {},
+            "user_agent": user_agent
+        }
+
+        # ==========================================================
+        # 🚨 [스마트 봇 차단] 정상적인 유저는 통과시키고 헬스체크 핑만 차단
+        # ==========================================================
+        
+        # 1. 이름에 대놓고 'bot', 'uptime', 'cron' 등이 들어간 기계는 즉시 차단
+        if user_agent and any(keyword in user_agent.lower() for keyword in ["bot", "uptime", "cron"]):
+            return False
+            
+        # 2. 기기 정보(User-Agent)와 IP 주소가 "둘 다" Unknown일 때만 헬스체크 핑으로 간주하고 차단
+        # (스트림릿 버전 차이로 하나만 Unknown이 뜨는 정상 유저는 통과시켜 줍니다)
+        if user_agent == "Unknown" and real_ip == "Unknown":
+            return False
+        
+        # ==========================================================
+        
+        try:
+            print(f"DEBUG: 데이터 발송 준비 완료 - {log_data}", flush=True) # 추가
+
+            response = client.table('usage_logs').insert(log_data, returning='minimal').execute()
+
+            print(f"✅ 트래커 기록 성공: {response.data}", flush=True) # 상세 결과 출력
+        except Exception as e:
+            # 이 줄이 없거나 pass로 되어 있다면 아래처럼 에러 내용을 찍도록 수정합니다.
+            print(f"🚨 트래커 에러 발생: {e}", flush=True)
+
+        return True
     except Exception as e:
         print(f"🚨 트래커 에러: {e}", flush=True)
         return False
