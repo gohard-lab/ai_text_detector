@@ -53,6 +53,10 @@ def get_or_create_session_id():
 
 
 def log_app_usage(app_name="unknown_app", action="page_view", details=None):
+    
+    # 함수가 실행되자마자 이 메시지부터 터미널에 무조건 찍도록 추가!
+    print(f"✅ 트래커 함수 진입 성공! (앱: {app_name}, 액션: {action})")
+    
     real_ip = get_real_client_ip()
     
     # IP가 아직 로딩 중이면 로그 기록을 일단 건너뜁니다 (화면 멈춤 방지)
