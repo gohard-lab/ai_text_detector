@@ -72,7 +72,12 @@ def log_app_usage(app_name="unknown_app", action="page_view", details=None):
 
         print(f"DEBUG: 접속 시도 중... URL: {url}", flush=True)
     
-        real_ip = get_real_client_ip()
+
+        # IP 가져오기 시도 (실패해도 앱이 멈추지 않게 함)
+        try:
+            real_ip = get_real_client_ip()
+        except:
+            real_ip = "Unknown"
         
         # IP가 아직 로딩 중이면 로그 기록을 일단 건너뜁니다 (화면 멈춤 방지)
         if not real_ip:
