@@ -25,7 +25,7 @@ uv run streamlit run app.py
 ### 🔗 Links & Execution
 GitHub Source: https://github.com/gohard-lab/ai_text_detector
 
-YouTube Channel: 잡학다식 개발자 (Polymath Developer)
+YouTube Channel: [잡학다식 개발자 (Polymath Developer)](https://www.youtube.com/@PolymathDev_KR)
 
 Web / EXE 실행 파일 다운로드: [여기에 실행 파일 또는 Colab 링크 입력]
 
