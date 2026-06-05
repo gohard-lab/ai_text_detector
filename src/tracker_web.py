@@ -108,7 +108,12 @@ def log_app_usage(app_name="unknown_app", action="page_view", details=None):
         
         # ==========================================================
         
-        client.table('usage_logs').insert(log_data, returning='minimal').execute()
+        try:
+            client.table('usage_logs').insert(log_data, returning='minimal').execute()
+        except Exception as e:
+            # 이 줄이 없거나 pass로 되어 있다면 아래처럼 에러 내용을 찍도록 수정합니다.
+            print(f"🚨 트래커 에러 발생: {e}")
+
         return True
     except Exception as e:
         print(f"🚨 트래커 에러: {e}")
