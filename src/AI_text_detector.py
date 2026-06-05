@@ -39,6 +39,7 @@ st.caption("텍스트의 패턴과 가변성(Burstiness)을 분석합니다.")
 user_input = st.text_area("분석할 텍스트를 입력하세요:", height=200)
 
 if st.button("패턴 분석 시작"):
+    print("--- [디버그] 버튼 클릭 감지됨 ---")
     st.write("버튼 클릭 확인!") # 👈 웹 화면에 강제로 글자를 띄워봅니다.
     if user_input.strip():
         burstiness, cliches, ai_index = analyze_text(user_input)

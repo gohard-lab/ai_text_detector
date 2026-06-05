@@ -53,7 +53,9 @@ def get_or_create_session_id():
 
 
 def log_app_usage(app_name="unknown_app", action="page_view", details=None):
-    
+    # flush=True를 넣어 출력이 지워지지 않고 즉시 터미널에 고정되게 함
+    print(f"DEBUG: 트래커 진입 - {action}", flush=True)
+
     # 함수가 실행되자마자 이 메시지부터 터미널에 무조건 찍도록 추가!
     print(f"✅ 트래커 함수 진입 성공! (앱: {app_name}, 액션: {action})")
     
@@ -113,16 +115,16 @@ def log_app_usage(app_name="unknown_app", action="page_view", details=None):
         # ==========================================================
         
         try:
-            print(f"DEBUG: 데이터 발송 준비 완료 - {log_data}") # 추가
+            print(f"DEBUG: 데이터 발송 준비 완료 - {log_data}", flush=True) # 추가
 
             response = client.table('usage_logs').insert(log_data, returning='minimal').execute()
 
-            print(f"✅ 트래커 기록 성공: {response.data}") # 상세 결과 출력
+            print(f"✅ 트래커 기록 성공: {response.data}", flush=True) # 상세 결과 출력
         except Exception as e:
             # 이 줄이 없거나 pass로 되어 있다면 아래처럼 에러 내용을 찍도록 수정합니다.
-            print(f"🚨 트래커 에러 발생: {e}")
+            print(f"🚨 트래커 에러 발생: {e}", flush=True)
 
         return True
     except Exception as e:
-        print(f"🚨 트래커 에러: {e}")
+        print(f"🚨 트래커 에러: {e}", flush=True)
         return False
