@@ -27,7 +27,7 @@ GitHub Source: https://github.com/gohard-lab/ai_text_detector
 
 YouTube Channel: [잡학다식 개발자 (Polymath Developer)](https://www.youtube.com/@PolymathDev_KR)
 
-유튜브 영상: [유튜브 영상](https://youtu.be/L6IJg49Ak5Y)
+유튜브 영상: [유튜브 영상](https://youtu.be/xSgHojC45kk)
 
 Web: [간이 AI 패턴 분석기](https://aitextdetector-lhbmnzgpagsda9nebjhpuj.streamlit.app/)
 
