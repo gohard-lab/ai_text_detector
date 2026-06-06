@@ -27,6 +27,8 @@ GitHub Source: https://github.com/gohard-lab/ai_text_detector
 
 YouTube Channel: [잡학다식 개발자 (Polymath Developer)](https://www.youtube.com/@PolymathDev_KR)
 
+유튜브 영상: [유튜브 영상](https://youtu.be/L6IJg49Ak5Y)
+
 Web: [간이 AI 패턴 분석기](https://aitextdetector-lhbmnzgpagsda9nebjhpuj.streamlit.app/)
 
 💡 안내: 제공되는 exe 실행 파일은 순수 파이썬 코드를 빌드한 것으로 바이러스나 악성코드가 전혀 없으니 안심하고 다운로드하여 사용하셔도 됩니다.
