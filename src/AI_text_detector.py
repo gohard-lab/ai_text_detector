@@ -2,7 +2,7 @@
 import streamlit as st
 import numpy as np
 # Import custom tracker as requested
-from tracker_web import log_app_usage
+from tracker_hub import log_app_usage
 
 # 1. 먼저 글을 저장할 공간(변수)이 세션에 없으면 빈 값으로 만들어 줍니다.
 if "analysis_result" not in st.session_state:
