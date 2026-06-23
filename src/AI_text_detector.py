@@ -1,8 +1,18 @@
 # app.py (Main Streamlit Application)
+# =================================================================
+# 🛡️ [STAGE 1] GLOBAL MASTER TRACKER INITIALIZATION (최상단 고정)
+# =================================================================
+# 파이썬 엔진이 스트림릿을 구우러 들어가기 전에 문지기부터 완벽하게 세웁니다.
+from tracker_hub import log_app_usage
+
+# 앱이 켜지는 순간 최초 1회만 트래킹 데이터 적재
+log_app_usage("ai_detector_web", "app_opened")
+
+# =================================================================
+# 🎨 [STAGE 2] CORE FRAMEWORKS & UI LIBRARIES
+# =================================================================
 import streamlit as st
 import numpy as np
-# Import custom tracker as requested
-from tracker_hub import log_app_usage
 
 # 1. 먼저 글을 저장할 공간(변수)이 세션에 없으면 빈 값으로 만들어 줍니다.
 if "analysis_result" not in st.session_state:
